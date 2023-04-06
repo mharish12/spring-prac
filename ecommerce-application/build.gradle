@@ -1,34 +1,56 @@
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '2.6.3'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.springframework.boot' version '2.6.6'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id "com.moowork.node" version "1.3.1"
 }
 
-group = 'com.h12.ecommerce'
-version = '1.0-SNAPSHOT'
-sourceCompatibility = "15"
+archivesBaseName = 'spring-prac'
 
-repositories {
-    mavenCentral()
+bootJar {
+    manifest {
+        attributes 'Start-Class': 'com.h12.ecommerce.MainApplication'
+    }
 }
 
-dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+jacocoTestCoverageVerification {
+    violationRules {
+        // Rule specific to the Service
+        rule {
+            element = 'CLASS'
+            /*
+            limit {
+                counter = 'INSTRUCTION'
+                minimum = 0.16
+            }
+             */
+
+            limit {
+                counter = 'LINE'
+                minimum = 0.8
+            }
+
+            //limit {
+            // counter = 'COMPLEXITY'
+            // minimum = 0.5
+            //}
+
+            //limit {
+            // counter = 'METHOD'
+            // minimum = 0.5
+            //}
+
+            excludes = [
+
+            ]
+        }
+    }
 }
 
-test {
-    useJUnitPlatform()
-}
-
-//dependencyManagement {
-//    imports {
-//        mavenBom 'org.springframework.boot:spring-boot-dependencies:1.2.6.RELEASE'
-//    }
+//bootRun {
+// systemProperties = System.properties
 //}
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.postgresql/postgresql
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.3'
     implementation 'junit:junit:4.13.2'
 
@@ -44,10 +66,10 @@ dependencies {
 //    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '4.3.1'
 
     // https://mvnrepository.com/artifact/org.springframework/spring-core
-    implementation group: 'org.springframework', name: 'spring-core', version: '5.3.16'
+
 
 // https://mvnrepository.com/artifact/org.springframework.plugin/spring-plugin-core
-    implementation group: 'org.springframework.plugin', name: 'spring-plugin-core', version: '2.0.0.RELEASE'
+//    implementation group: 'org.springframework.plugin', name: 'spring-plugin-core', version: '2.0.0.RELEASE'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'com.h2database:h2'
@@ -59,10 +81,93 @@ dependencies {
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
-//    implementation( 'org.springframework.security:spring-security-test')
+//    implementation 'org.springframework.boot:spring-boot-starter-web'
+//    testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+
+    implementation 'org.hibernate.validator:hibernate-validator:6.1.2.Final'
+    testImplementation 'junit:junit:4.13.1'
+    compileOnly 'org.mapstruct:mapstruct-jdk8:1.2.0.Final'
+    //implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    //implementation 'io.prometheus:simpleclient:0.16.0'
+    //implementation 'io.micrometer:micrometer-registry-prometheus:1.8.5'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.2.0.Final'
 }
 
+tasks.register("prepareKotlinBuildScriptModel"){}
 
-targetCompatibility = JavaVersion.VERSION_15
+//test {
+//    useJUnitPlatform()
+//}
+//
+//task getVersions(dependsOn: build) {
+//    def separator = System.getProperty('line.separator')
+//
+//    def filePath = "${rootDir}/service/src/main/resources/git.properties"
+//    //def filePath = "${buildDir}/resources/main/git.properties"
+//    println("src dir: " + filePath)
+//    //println("git properties file path: ${filePath}")
+//    //boolean success = new File("$buildDir/resources/main/git.properties").delete()
+//    boolean success = new File(filePath).delete()
+//    //def file = new File("$buildDir/resources/main/git.properties")
+//    def file = new File(filePath)
+//    def commit = grgit.head()
+//    def branch = grgit.branch.current()
+//    def tags = grgit.tag.list()
+//    def tag1 = tags.find{elem -> elem.commit.id.equals(commit.id)}
+//
+//    //println("tag: " + tag1.dump())
+//    def tagName = ""
+//    def tagMessage = ""
+//    def tagCommitMessage = ""
+//
+//    if(tag1 != null) {
+//        println("found tag for commit")
+//        tagName = tag1.fullName
+//        tagMessage = tag1.commit.fullMessage
+//    }
+//
+//    tagMessage.eachLine {
+//        tagCommitMessage= tagCommitMessage+it
+//    }
+//
+//    //file.write("project.version=${version}$separator")
+//    //file << "project.version=${moduleVersion}$separator"
+//    //file << "git.version=${gitRevision}$separator"
+//    //file << "git.abbreviated.version=${gitAbbRevision}$separator"
+//    file.write("git.build.version:${project.version}")
+//    file << separator
+//    /*file << "git.commit.message.full:${commit.shortMessage}"
+//    file << separator
+//    file << ("git.commit.id:${commit.id}")
+//    file << separator
+//    file << ("git.commit.user.name:${commit.author.name}")
+//    file << separator
+//    file << ("git.commit.user.email:${commit.author.email}")
+//    file << separator
+//    file << ("git.build.user.name:${commit.committer.name}")
+//    file << separator
+//    file << ("git.build.user.email:${commit.committer.email}")
+//    file << separator
+//    file << ("git.branch:${branch.fullName}")
+//    file << separator
+//    file << ("git.commit.time:${commit.dateTime}")
+//    file << separator
+//    file << ("git.tag.name:${tagName}")
+//    file << separator
+//    file << ("git.tag.message:\"${tagCommitMessage}\"")
+//    */
+//
+//    //println('git head commit person: ' + commit.author.dump())
+//    //println('git head commit person: ' + commit.committer.dump())
+//    //println('git head commit: ' + commit.dump())
+//
+//    println("version: " + project.version)
+//    println('git branch: ' + branch.fullName)
+//    //println('git head commit id: ' + commit.id)
+//    //println('Tag name for the commit is: ' + tagName)
+//    //println('Tag message for the commit is: ' + tagCommitMessage)
+//    //println('Done running getVersions file status: '+ file.toPath())
+//}
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17

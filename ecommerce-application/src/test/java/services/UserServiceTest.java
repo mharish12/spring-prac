@@ -1,10 +1,11 @@
 package services;
 
-import com.zs.assignment_final.dao.UserDao;
-import com.zs.assignment_final.exceptions.InternalServerException;
-import com.zs.assignment_final.exceptions.UserInputException;
-import com.zs.assignment_final.models.User;
-import com.zs.assignment_final.models.UserId;
+import com.h12.ecommerce.dao.UserDao;
+import com.h12.ecommerce.exceptions.InternalServerException;
+import com.h12.ecommerce.exceptions.UserInputException;
+import com.h12.ecommerce.models.User;
+import com.h12.ecommerce.models.UserId;
+import com.h12.ecommerce.services.UserService;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

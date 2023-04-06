@@ -1,0 +1,245 @@
+buildscript {
+    ext {
+//        mockitoVersion = "2.18.3"
+        springBootVersion = "2.6.6"
+        apacheCommonLangVersion="3.0"
+        apacheCommonCollectionVersion="4.0"
+        apacheCommonCsvVersion="1.8"
+        apacheCommonValidatorVersion="1.6"
+        mockitoVersion="4.2.0"
+        testNgVersion="7.1.0"
+        springRetryVersion="1.2.5.RELEASE"
+        echoVersion="1.5.6"
+        powermockVersion="2.0.7"
+        sonarQubeVarsion = "2.6.2"
+        junitVersion = "5.8.1"
+    }
+
+    repositories {
+        maven {
+            url "https://krogertechnology.jfrog.io/artifactory/plugins-release"
+        }
+    }
+
+    dependencies {
+        classpath "io.freefair.gradle:lombok-plugin:5.1.1"
+    }
+}
+
+plugins {
+    id 'java'
+//    id "io.freefair.lombok" version "5.1.1"
+    id 'jacoco'
+    id 'com.github.ksoichiro.console.reporter' version '0.6.3'
+    id "org.sonarqube" version "2.7"
+    id 'org.ajoberstar.grgit' version '4.1.1'
+}
+
+jacoco {
+    toolVersion = "0.8.5"
+    reportsDirectory = file("$buildDir/reports/jacoco")
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+//jacocoTestReport {
+//    reports {
+//        xml.enabled true
+//        csv.enabled false
+//        html.enabled true
+//    }
+//    //executionData testNG
+//    executionData.from = files("$buildDir/jacoco/test.exec")
+//
+//    afterEvaluate {
+//        classDirectories.setFrom(files(classDirectories.files.collect {
+//            fileTree(dir: it,
+//                    exclude: [
+//
+//
+//                    ]
+//            )
+//        }))
+//    }
+//
+//    onlyIf = {
+//        true
+//    }
+//    doFirst {
+//        executionData = files(executionData.findAll {
+//            it.exists()
+//        })
+//    }
+//
+//}
+
+//jacocoTestCoverageVerification {
+//    violationRules {
+//        rule {
+//            element = 'CLASS'
+//            limit {
+//                counter = 'LINE'
+//                value = 'COVEREDRATIO'
+//                minimum = 0.8
+//            }
+//            excludes = [
+//
+//            ]
+//        }
+//    }
+//}
+
+allprojects {
+    group = 'com.h12.ecommerce'
+    version = '1.0.0-SNAPSHOT'
+    apply plugin: "jacoco"
+
+    repositories {
+        // Use Maven Central for resolving dependencies.
+
+        mavenCentral()
+        mavenLocal()
+
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+//    apply plugin: 'io.freefair.lombok'
+    apply plugin: 'org.sonarqube'
+
+    dependencies {
+        implementation("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
+        implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+        implementation("org.springframework.boot:spring-boot-starter-aop:${springBootVersion}")
+        implementation("org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}")
+//        implementation group: 'org.springframework', name: 'spring-core', version: "${springBootVersion}"
+        implementation group: 'org.springframework', name: 'spring-core', version: '5.3.16'
+        implementation("com.datastax.cassandra:cassandra-driver-core:3.5.0")
+        implementation 'com.google.guava:guava:19.0'
+        implementation 'com.codahale.metrics:metrics-core:3.0.2'
+
+
+        //implementation 'com.datastax.oss:java-driver-core:4.10.0'
+
+        implementation("org.springframework.retry:spring-retry:${springRetryVersion}")
+        implementation 'com.auth0:jwks-rsa:0.11.0'
+        implementation 'com.auth0:java-jwt:3.14.0'
+        implementation 'org.jetbrains:annotations:15.0'
+        implementation('org.apache.kafka:kafka-clients:3.0.1')
+
+        implementation('org.apache.avro:avro:1.9.2')
+
+        implementation 'org.springframework.kafka:spring-kafka:2.8.2'
+
+
+        implementation("org.projectlombok:lombok:1.18.24")
+
+        implementation(group: 'org.apache.commons', name: 'commons-lang3', version: "${apacheCommonLangVersion}")
+        implementation(group: 'org.apache.commons', name: 'commons-collections4', version: "${apacheCommonCollectionVersion}")
+        implementation(group: 'org.apache.commons', name: 'commons-csv', version: "${apacheCommonCsvVersion}")
+        implementation(group: 'commons-validator', name: 'commons-validator', version: "${apacheCommonValidatorVersion}")
+        implementation(group: 'commons-net', name: 'commons-net', version: "3.6")
+        implementation(group: "com.jcraft", name: "jsch", version: "0.1.55")
+
+        implementation("com.github.java-json-tools:json-patch:1.11")
+
+        implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.8.4'
+        implementation ('io.prometheus:simpleclient:0.16.0') {
+            exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+        }
+        implementation('org.owasp.esapi:esapi:2.2.2.0'){
+            exclude group: 'log4j', module:'log4j'
+        }
+        implementation("org.apache.logging.log4j:log4j-layout-template-json:2.17.2"){
+            exclude group: 'log4j', module:'log4j-slf4j-impl'
+        }
+
+        implementation("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:${sonarQubeVarsion}")
+
+        testImplementation ("org.powermock:powermock-api-mockito2:${powermockVersion}") {
+            exclude group: 'org.testng', module: 'testng'
+        }
+        testImplementation ("org.powermock:powermock-module-testng:${powermockVersion}"){
+            exclude group: 'org.testng', module: 'testng'
+        }
+
+        testImplementation 'com.google.inject:guice:4.2.2'
+        testImplementation("org.testng:testng:${testNgVersion}") {
+            exclude group: 'com.google.inject', module: 'guice'
+        }
+
+
+        testImplementation group: 'org.powermock', name: 'powermock-module-junit4', version: powermockVersion
+        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: junitVersion
+        testImplementation group: 'org.mockito', name: 'mockito-inline', version: mockitoVersion
+        testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: mockitoVersion
+//        testImplementation("org.mockito:mockito-core:${mockitoVersion}")
+        testImplementation("org.springframework:spring-test")
+        testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootVersion}") {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+        testImplementation("org.junit.jupiter:junit-jupiter-api:5.4.2")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.2")
+        testImplementation 'org.jeasy:easy-random-core:4.0.0'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+        implementation{
+            exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+        }
+
+    }
+
+    jar {
+        manifest {
+            attributes(
+                    'Implementation-Version': rootProject.version
+                    //'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                    //'Main-Class': 'com.h12.ecommerce.MainApplication'
+            )
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+        //forkEvery = 1
+        // Use TestNG for unit tests
+        useTestNG {
+            options ->
+                options.parallel = 'tests'
+                options.threadCount = 3
+        }
+
+        failFast = false
+    }
+
+    tasks.withType(Test).configureEach {
+        maxParallelForks = 4
+    }
+
+    test.finalizedBy jacocoTestReport
+    jacocoTestReport.dependsOn test
+    check.dependsOn jacocoTestCoverageVerification
+}
+
+tasks.register('jacocoReport', JacocoReport) {
+    for (p in allprojects) {
+        def testTask = p.tasks.findByName("test")
+        if (testTask != null)
+            dependsOn(testTask)
+
+        executionData.setFrom(file("${p.buildDir}/jacoco/test.exec"))
+        classDirectories.from(file("${p.buildDir}/classes/java/main"))
+    }
+}

@@ -1,10 +1,11 @@
 package services;
 
-import com.zs.assignment_final.dao.ProductDao;
-import com.zs.assignment_final.models.Product;
-import com.zs.assignment_final.models.ProductId;
-import com.zs.assignment_final.exceptions.InternalServerException;
-import com.zs.assignment_final.exceptions.UserInputException;
+import com.h12.ecommerce.dao.ProductDao;
+import com.h12.ecommerce.models.Product;
+import com.h12.ecommerce.models.ProductId;
+import com.h12.ecommerce.exceptions.InternalServerException;
+import com.h12.ecommerce.exceptions.UserInputException;
+import com.h12.ecommerce.services.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

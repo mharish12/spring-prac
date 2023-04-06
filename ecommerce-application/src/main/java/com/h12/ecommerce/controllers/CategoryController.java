@@ -1,11 +1,11 @@
 package com.h12.ecommerce.controllers;
 
-import com.zs.assignment_final.models.Category;
-import com.zs.assignment_final.models.ErrorEntity;
-import com.zs.assignment_final.models.ProductId;
-import com.zs.assignment_final.exceptions.InternalServerException;
-import com.zs.assignment_final.exceptions.UserInputException;
-import com.zs.assignment_final.services.CategoryService;
+import com.h12.ecommerce.models.Category;
+import com.h12.ecommerce.models.ErrorEntity;
+import com.h12.ecommerce.models.ProductId;
+import com.h12.ecommerce.exceptions.InternalServerException;
+import com.h12.ecommerce.exceptions.UserInputException;
+import com.h12.ecommerce.services.CategoryService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
