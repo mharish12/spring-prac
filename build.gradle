@@ -16,9 +16,7 @@ buildscript {
     }
 
     repositories {
-        maven {
-            url "https://krogertechnology.jfrog.io/artifactory/plugins-release"
-        }
+       mavenCentral()
     }
 
     dependencies {
