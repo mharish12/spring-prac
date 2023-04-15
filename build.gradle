@@ -94,7 +94,7 @@ java {
 
 allprojects {
     group = 'com.h12.ecommerce'
-    version = '1.0.0-SNAPSHOT'
+    version = '0.0.1-SNAPSHOT'
     apply plugin: "jacoco"
 
     repositories {
