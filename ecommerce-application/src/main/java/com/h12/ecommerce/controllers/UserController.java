@@ -19,15 +19,14 @@ import org.springframework.web.bind.annotation.*;
 @ResponseBody
 public class UserController extends MainController{
     private final Logger logger = getLogger();
-
-    @Autowired
     private final UserService userService;
 
     /**
      * constructor.
      */
-    public UserController(){
-        userService = new UserService();
+    @Autowired
+    public UserController(UserService userService){
+        this.userService = userService;
     }
 
     /**

@@ -24,14 +24,14 @@ import java.util.List;
 public class CartController extends MainController{
     private final Logger logger = getLogger();
 
-    @Autowired
     private final CartService cartService;
 
     /**
      * Cart service.
      */
-    public CartController() {
-        cartService  =  new CartService();
+    @Autowired
+    public CartController(CartService cartService) {
+        this.cartService  =  cartService;
     }
 
     /**

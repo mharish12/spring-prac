@@ -19,7 +19,7 @@ public class AsyncConfiguration {
         executor.setCorePoolSize(3);
         executor.setMaxPoolSize(3);
         executor.setQueueCapacity(100);
-        executor.setThreadNamePrefix("AsynchThread-");
+        executor.setThreadNamePrefix("AsyncThread-");
         executor.initialize();
 
         ExecutorService executorService;
@@ -29,15 +29,15 @@ public class AsyncConfiguration {
         executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
 
-        try {
-            CompletableFuture<Long> completableFuture = CompletableFuture.supplyAsync(() -> helperForExecution(100L));
-            while (!completableFuture.isDone()) {
-                System.out.println("CompletableFuture is not finished yet...");
-            }
-            long result = completableFuture.get();
-        } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            CompletableFuture<Long> completableFuture = CompletableFuture.supplyAsync(() -> helperForExecution(100L));
+//            while (!completableFuture.isDone()) {
+//                System.out.println("CompletableFuture is not finished yet...");
+//            }
+//            long result = completableFuture.get();
+//        } catch (ExecutionException | InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
         return executor;
     }
 

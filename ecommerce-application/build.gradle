@@ -5,7 +5,7 @@ plugins {
     id 'maven-publish'
 }
 
-archivesBaseName = 'spring-prac'
+//archivesBaseName = 'spring-prac'
 
 bootJar {
     manifest {
@@ -36,9 +36,9 @@ publishing {
     }
 }
 
-tasks.register("testingForEnv") {
-    print(System.getenv("GITHUB_USER"))
-}
+//tasks.register("testingForEnv") {
+//    print(System.getenv("GITHUB_USER"))
+//}
 
 jacocoTestCoverageVerification {
     violationRules {
@@ -126,3 +126,23 @@ tasks.register("prepareKotlinBuildScriptModel"){}
 
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes "Main-Class": "com.h12.ecommerce.MainApplication"
+    }
+    from sourceSets.main.output
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.collect { {
+            if(!it.name.contains("log4j")
+                    || !it.name.contains("slf4j")
+                    || !it.name.contains("storm")
+            ) {
+                it.isDirectory() ? it : zipTree(it)
+            }
+        }
+        }
+    }
+}

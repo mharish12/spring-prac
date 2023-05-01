@@ -24,13 +24,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 @RestController
 @RequestMapping(value = "/product")
 public class ProductController extends MainController{
-    @Autowired
+
     private final ProductService productService;
     private final Logger logger;
 
-    public ProductController(){
+    @Autowired
+    public ProductController(ProductService productService){
         logger = super.getLogger();
-        productService = new ProductService();
+        this.productService = productService;
     }
 
     /**

@@ -4,15 +4,12 @@ import com.h12.ecommerce.exceptions.InternalServerException;
 import com.h12.ecommerce.exceptions.UserInputException;
 import com.h12.ecommerce.models.User;
 import com.h12.ecommerce.models.UserId;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 
-import java.awt.print.Pageable;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +23,13 @@ public class UserDao extends MainDao {
     private final static String deleteUserSql = "DELETE FROM USERS WHERE ID = ?";
     private final static String updateUserSql = "UPDATE USERS SET NAME = ? WHERE ID = ?";
     private Connection connection;
+
+
+    /**
+     * Default constructor.
+     */
+    public UserDao() {
+    }
 
     /**
      *

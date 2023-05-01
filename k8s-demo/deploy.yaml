@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: ecommerce-application
+
+spec:
+  selector:
+    matchLabels:
+      app: ecommerce-application
+  template:
+    metadata:
+      labels:
+        app: ecommerce-application
+    spec:
+      containers:
+        - name: ecommerce-application
+          image: mharish12/ecommerce-application:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9090

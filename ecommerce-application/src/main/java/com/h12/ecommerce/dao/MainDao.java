@@ -1,6 +1,8 @@
 package com.h12.ecommerce.dao;
 
+import com.h12.ecommerce.configurations.model.DBConfig;
 import com.h12.ecommerce.exceptions.InternalServerException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 
@@ -11,12 +13,13 @@ import java.sql.SQLException;
 @Repository
 public class MainDao {
     private Connection connection;
+    @Autowired
+    private DBConfig dbConfig;
 
     /**
      * Default constructor.
      */
     protected MainDao()  {
-
     }
 
     /**
@@ -46,9 +49,9 @@ public class MainDao {
 //        String dataBaseName = properties.getProperty("db.name");
 //        String userName = properties.getProperty("db.username");
 //        String userPassword = properties.getProperty("db.password");
-        String url = "jdbc:postgresql://ec2-3-7-254-215.ap-south-1.compute.amazonaws.com:2006/zs_intern_test";
-        String userName = "postgres";
-        String userPassword = "root123";
+        String url = dbConfig.getUrl();
+        String userName = dbConfig.getUserName();
+        String userPassword = dbConfig.getPassword();
 //        String url = jdbcUrl + dataBaseName;
         try {
             connection = DriverManager.getConnection(url, userName, userPassword);
