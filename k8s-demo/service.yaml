@@ -6,5 +6,5 @@ spec:
   selector:
     app: ecommerce-application
   ports:
-    - port: 9090
+    - port: 90
       targetPort: 9090
