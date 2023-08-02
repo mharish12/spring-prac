@@ -1,7 +1,7 @@
 buildscript {
     ext {
 //        mockitoVersion = "2.18.3"
-        springBootVersion = "2.6.6"
+        springBootVersion = "3.1.2"
         apacheCommonLangVersion="3.0"
         apacheCommonCollectionVersion="4.0"
         apacheCommonCsvVersion="1.8"
@@ -35,7 +35,7 @@ plugins {
 
 jacoco {
     toolVersion = "0.8.5"
-    reportsDirectory = file("$buildDir/reports/jacoco")
+//    reportsDirectory = file("$buildDir/reports/jacoco")
 }
 
 java {
@@ -110,14 +110,16 @@ subprojects {
     apply plugin: 'org.sonarqube'
 
     dependencies {
-        implementation("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
-        implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+        implementation "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
+        implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+        implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
         implementation("org.springframework.boot:spring-boot-starter-aop:${springBootVersion}")
+        implementation "org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}"
         implementation("org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}")
 //        implementation group: 'org.springframework', name: 'spring-core', version: "${springBootVersion}"
-        implementation group: 'org.springframework', name: 'spring-core', version: '5.3.16'
-        implementation("com.datastax.cassandra:cassandra-driver-core:3.5.0")
-        implementation 'com.google.guava:guava:19.0'
+        implementation("com.datastax.cassandra:cassandra-driver-core:3.11.4")
+        implementation group: 'com.google.guava', name: 'guava', version: '32.1.2-jre'
+
         implementation 'com.codahale.metrics:metrics-core:3.0.2'
 
 
@@ -131,7 +133,7 @@ subprojects {
 
         implementation('org.apache.avro:avro:1.9.2')
 
-        implementation 'org.springframework.kafka:spring-kafka:2.8.2'
+        implementation 'org.springframework.kafka:spring-kafka:3.0.9'
 
 
         implementation("org.projectlombok:lombok:1.18.24")
@@ -157,6 +159,7 @@ subprojects {
         }
 
         implementation("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:${sonarQubeVarsion}")
+        testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
 
         testImplementation ("org.powermock:powermock-api-mockito2:${powermockVersion}") {
             exclude group: 'org.testng', module: 'testng'
@@ -193,21 +196,21 @@ subprojects {
         compileOnly {
             extendsFrom annotationProcessor
         }
-        implementation{
+        implementation {
             exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
         }
 
     }
 
-    jar {
-        manifest {
-            attributes(
-                    'Implementation-Version': rootProject.version
-                    //'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-                    //'Main-Class': 'com.h12.ecommerce.MainApplication'
-            )
-        }
-    }
+//    jar {
+//        manifest {
+//            attributes(
+//                    'Implementation-Version': rootProject.version
+//                    //'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+//                    //'Main-Class': 'com.h12.ecommerce.MainApplication'
+//            )
+//        }
+//    }
 
     test {
         useJUnitPlatform()

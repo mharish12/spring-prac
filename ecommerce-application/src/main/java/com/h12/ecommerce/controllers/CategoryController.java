@@ -28,12 +28,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 @RequestMapping("/category")
 public class CategoryController extends MainController {
     private final CategoryService categoryService;
-    private final Logger logger;
+    private static final Logger logger = Logger.getLogger(CategoryController.class);
 
     @Autowired
     public CategoryController(CategoryService categoryService){
         this.categoryService = categoryService;
-        this.logger = super.getLogger();
     }
     /**
      *

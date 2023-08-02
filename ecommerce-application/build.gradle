@@ -1,15 +1,15 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.6'
-    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'org.springframework.boot' version '3.1.2'
+    id 'io.spring.dependency-management' version '1.1.2'
     id "com.moowork.node" version "1.3.1"
     id 'maven-publish'
 }
 
-//archivesBaseName = 'spring-prac'
+archivesBaseName = 'spring-prac'
 
 bootJar {
     manifest {
-        attributes 'Start-Class': 'com.h12.ecommerce.MainApplication'
+        attributes 'Main-Class' : 'com.h12.ecommerce.MainApplication'
     }
 }
 
@@ -79,33 +79,21 @@ jacocoTestCoverageVerification {
 //}
 
 dependencies {
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.3'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.8'
     implementation 'junit:junit:4.13.2'
+    implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-//
-    // https://mvnrepository.com/artifact/log4j/log4j
     implementation group: 'log4j', name: 'log4j', version: '1.2.17'
 
-    // https://mvnrepository.com/artifact/org.mockito/mockito-core
 //    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
     testImplementation group: 'org.mockito', name: 'mockito-inline', version: '4.3.1'
 //    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '4.3.1'
 
-    // https://mvnrepository.com/artifact/org.springframework/spring-core
+//    testImplementation group: 'com.h2database', name: 'h2', version: '2.2.220'
 
-
-// https://mvnrepository.com/artifact/org.springframework.plugin/spring-plugin-core
-//    implementation group: 'org.springframework.plugin', name: 'spring-plugin-core', version: '2.0.0.RELEASE'
-
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'com.h2database:h2'
-    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
-
-// https://mvnrepository.com/artifact/javax.inject/javax.inject
-    implementation group: 'javax.inject', name: 'javax.inject', version: '1'
-
+    implementation(group: 'javax.inject', name: 'javax.inject', version: '1')
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
@@ -113,7 +101,7 @@ dependencies {
 //    testImplementation('org.springframework.boot:spring-boot-starter-test')
 
 
-    implementation 'org.hibernate.validator:hibernate-validator:6.1.2.Final'
+    implementation 'org.hibernate.validator:hibernate-validator:6.1.3.Final'
     testImplementation 'junit:junit:4.13.1'
     compileOnly 'org.mapstruct:mapstruct-jdk8:1.2.0.Final'
     //implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -130,16 +118,14 @@ targetCompatibility = JavaVersion.VERSION_17
 jar {
     enabled = false
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    manifest {
-        attributes "Main-Class": "com.h12.ecommerce.MainApplication"
-    }
+//    manifest {
+//        attributes "Main-Class": "com.h12.ecommerce.MainApplication"
+//    }
     from sourceSets.main.output
     dependsOn configurations.runtimeClasspath
     from {
         configurations.runtimeClasspath.collect { {
-            if(!it.name.contains("log4j")
-                    || !it.name.contains("slf4j")
-                    || !it.name.contains("storm")
+            if(!it.name.contains("log4j") && !it.name.contains("slf4j")
             ) {
                 it.isDirectory() ? it : zipTree(it)
             }

@@ -3,9 +3,11 @@
 
 *.iml
 
-**/gradle/**
-gradle/**
-gradle/
+#**/gradle/**
+#gradle/**
+#gradle/
 .gradle/
 
 .build/**
+**/build/**
+build/**

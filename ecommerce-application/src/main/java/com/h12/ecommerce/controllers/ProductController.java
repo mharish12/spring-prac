@@ -26,11 +26,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 public class ProductController extends MainController{
 
     private final ProductService productService;
-    private final Logger logger;
+    private static final Logger logger = Logger.getLogger(ProductController.class);
 
     @Autowired
     public ProductController(ProductService productService){
-        logger = super.getLogger();
         this.productService = productService;
     }
 

@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping(value = "/cart")
 @ResponseBody
 public class CartController extends MainController{
-    private final Logger logger = getLogger();
+    private static final Logger logger = Logger.getLogger(CartController.class);
 
     private final CartService cartService;
 

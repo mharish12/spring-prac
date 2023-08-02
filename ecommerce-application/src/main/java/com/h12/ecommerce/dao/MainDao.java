@@ -36,7 +36,7 @@ public class MainDao {
      *
      * @throws InternalServerException when sql statement execution didn't go well.
      */
-    private void createConnection() throws  InternalServerException {
+    private synchronized void createConnection() throws  InternalServerException {
 //        Properties properties = new Properties();
 //        String cwd = System.getProperty("user.dir");
 //        String fileName = cwd + "/src/main/resources/dbconfig.properties";
@@ -54,7 +54,9 @@ public class MainDao {
         String userPassword = dbConfig.getPassword();
 //        String url = jdbcUrl + dataBaseName;
         try {
-            connection = DriverManager.getConnection(url, userName, userPassword);
+            if(connection == null || connection.isClosed()) {
+                connection = DriverManager.getConnection(url, userName, userPassword);
+            }
         } catch (SQLException e) {
             throw new InternalServerException(e.getMessage());
         }

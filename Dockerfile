@@ -1,3 +1,3 @@
 FROM amazoncorretto:17-alpine-jdk
-COPY ecommerce-application/build/
-ENTRYPOINT ["java","-jar","/message-server-1.0.0.jar"]
+COPY ecommerce-application/build/*.jar ecommerce-application.jar
+ENTRYPOINT ["java","-jar","/ecommerce-application.jar"]

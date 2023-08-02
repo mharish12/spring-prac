@@ -2,11 +2,19 @@ package com.h12.ecommerce.models;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  * Product class.
  */
 @EntityScan
+@Entity
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private final int productId;
     private final String name;
     private final int cost;

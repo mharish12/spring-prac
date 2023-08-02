@@ -16,8 +16,4 @@ public class MainController {
     public MainController(){
 
     }
-
-    protected Logger getLogger(){
-        return logger;
-    }
 }

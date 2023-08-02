@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - "prod"
+      - "main"
 env:
   GITHUB_USER: ${{ secrets.GITHUB_USER }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -28,5 +28,8 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Publish package
-        run: ./gradlew clean build publish
+      - name: Gradle Build
+        run: ./gradlew clean build
+
+#      - name: Publish package
+#        run: ./gradlew clean build publish
