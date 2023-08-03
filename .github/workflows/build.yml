@@ -48,12 +48,12 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build
 
-  publish:
-    name: Publish jar
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
+#  publish:
+#    name: Publish jar
+#    needs: build
+#    runs-on: ubuntu-latest
+#
+#    steps:
 #      - name: checkout code
 #        uses: actions/checkout@v3
 #
