@@ -3,8 +3,9 @@
 
 *.iml
 
-#**/gradle/**
-#gradle/**
+**/gradle/*.jar
+**/gradle/*.properties
+gradle/**
 #gradle/
 .gradle/
 
