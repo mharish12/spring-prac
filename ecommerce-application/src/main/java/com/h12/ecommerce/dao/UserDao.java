@@ -29,6 +29,7 @@ public class UserDao extends MainDao {
      * Default constructor.
      */
     public UserDao() {
+
     }
 
     /**

@@ -120,7 +120,7 @@ subprojects {
         implementation("com.datastax.cassandra:cassandra-driver-core:3.11.4")
         implementation group: 'com.google.guava', name: 'guava', version: '32.1.2-jre'
 
-        implementation 'com.codahale.metrics:metrics-core:3.0.2'
+//        implementation 'com.codahale.metrics:metrics-core:3.0.2'
 
 
         //implementation 'com.datastax.oss:java-driver-core:4.10.0'
@@ -147,10 +147,10 @@ subprojects {
 
         implementation("com.github.java-json-tools:json-patch:1.11")
 
-        implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.8.4'
-        implementation ('io.prometheus:simpleclient:0.16.0') {
-            exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-        }
+//        implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.8.4'
+//        implementation ('io.prometheus:simpleclient:0.16.0') {
+//            exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+//        }
         implementation('org.owasp.esapi:esapi:2.2.2.0'){
             exclude group: 'log4j', module:'log4j'
         }

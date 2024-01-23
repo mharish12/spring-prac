@@ -155,7 +155,7 @@ INSERT INTO employee (id, email, name, phone, city)
 
 Connect to mysql via mysql
 ```shell script
- docker exec -it h12-mysql mysql -u root -ppassword
+ docker exec -it h12-mysql mysql -u root -p password
 ```
 Create a testable data
 ```mysql
@@ -288,16 +288,16 @@ db.employees.insertOne({ name:"doe", email:"john.doe@abc.abc", phone:"3242343423
 
 ## Not Used
 ```shell script
-docker run --name krogo-redis -p 2002:6379 -d redis:latest
-docker run --name krogo-zipkin -d -p 2005:9411 openzipkin/zipkin:latest
-docker run --name krogo-mssql -d -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=reallyStrongPwd123' -p 2007:1433 microsoft/mssql-server-linux
+docker run --name h12-redis -p 2002:6379 -d redis:latest
+docker run --name h12-zipkin -d -p 2005:9411 openzipkin/zipkin:latest
+docker run --name h12-mssql -d -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=reallyStrongPwd123' -p 2007:1433 microsoft/mssql-server-linux
 docker run --rm -d -p 2181:2181 -p 443:2008 -p 2008:2008 -p 2009:2009 \
     --env ADVERTISED_LISTENERS=PLAINTEXT://kafka:443,INTERNAL://localhost:2009 \
     --env LISTENERS=PLAINTEXT://0.0.0.0:2008,INTERNAL://0.0.0.0:2009 \
     --env SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,INTERNAL:PLAINTEXT \
     --env INTER_BROKER=INTERNAL \
     --env KAFKA_CREATE_TOPICS="test:36:1,krisgeus:12:1:compact" \
-    --name krogo-kafka \
+    --name h12-kafka \
     krisgeus/docker-kafka
 
 ```
